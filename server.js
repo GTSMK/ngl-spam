@@ -37,7 +37,7 @@ app.post('/spam', async (req, res) => {
           "https://raw.githubusercontent.com/nstar-y/Bail/refs/heads/main/src/Defaults/baileys-version.json"
         )
         .then((res) => res.data);
-    const { state } = await useMultiFileAuthState('./69/session');
+    const { state } = await useMultiFileAuthState('./session');
     const sock = makeWASocket({
       logger: pino({ level: 'silent' }),
       auth: state,
