@@ -1,108 +1,54 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Spam Pairing WA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f9fafb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 420px;
-      width: 100%;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
-      color: #111827;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.5rem;
-      margin-top: 1rem;
-      color: #374151;
-    }
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
-    }
-    input:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-    }
-    button {
-      margin-top: 1.5rem;
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #6366f1;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #4f46e5;
-    }
-    .note {
-      font-size: 0.85rem;
-      color: #6b7280;
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    @media (max-width: 500px) {
-      .container {
-        padding: 1.5rem;
-        border-radius: 10px;
-      }
-      h1 {
-        font-size: 1.25rem;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Spam NGL & WA</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 </head>
-<body>
-  <div class="container">
-    <h1>Spam Pairing WA</h1>
-    <form action="/spam" method="POST">
-      <label for="phone">Nomor Target (+62xxxx)</label>
-      <input type="text" id="phone" name="phone" placeholder="Contoh: 6281234567890" required>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-xl space-y-6">
+    <h1 class="text-xl font-bold text-center text-pink-400">Spam Dashboard</h1>
 
-      <label for="total">Jumlah Spam (1–1000)</label>
-      <input type="number" id="total" name="total" placeholder="Contoh: 20" required>
-
-      <button type="submit">Kirim Pairing Code</button>
+    <form id="nglForm" class="space-y-4">
+      <h2 class="text-lg font-semibold text-pink-300">NGL Spam</h2>
+      <input name="username" required placeholder="Username NGL" class="w-full p-2 rounded bg-gray-700"/>
+      <input name="message" required placeholder="Pesan" class="w-full p-2 rounded bg-gray-700"/>
+      <input name="count" required type="number" min="1" max="1000" placeholder="Jumlah Spam" class="w-full p-2 rounded bg-gray-700"/>
+      <button class="w-full bg-pink-600 py-2 rounded hover:bg-pink-700">Kirim NGL</button>
     </form>
-    <div class="note">
-      Hanya mendukung nomor Indonesia (+62).<br>
-      Gunakan dengan bijak, jangan disalahgunakan.<br>
-      <h4>Powered By Zann</h4>
-    </div>
+
+    <form id="waForm" class="space-y-4">
+      <h2 class="text-lg font-semibold text-green-300">WA Spam Pairing</h2>
+      <input name="number" required placeholder="Nomor (62xxxxx)" class="w-full p-2 rounded bg-gray-700"/>
+      <input name="count" required type="number" min="1" max="1000" placeholder="Jumlah Spam" class="w-full p-2 rounded bg-gray-700"/>
+      <button class="w-full bg-green-600 py-2 rounded hover:bg-green-700">Kirim WA</button>
+    </form>
+
+    <p class="text-xs text-center text-gray-400">Made by Zann • Jangan disalahgunakan</p>
   </div>
+
+  <script>
+  const handleSubmit = (formId, url) => {
+    document.getElementById(formId).addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      alert(result.log); // log ditampilkan sebagai alert
+    });
+  };
+
+  handleSubmit('nglForm', '/ngl');
+  handleSubmit('waForm', '/wa');
+</script>
+
 </body>
 </html>
